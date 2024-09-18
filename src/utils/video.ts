@@ -135,7 +135,6 @@ export const scrollToSubtitle = (currentTime: string) => {
     "dual-caption-container"
   );
 
-  console.log(subtitleElement, scrollableDiv);
   if (subtitleElement && scrollableDiv) {
     const subtitleElementRect = subtitleElement.getBoundingClientRect();
     const scrollableDivRect = scrollableDiv.getBoundingClientRect();

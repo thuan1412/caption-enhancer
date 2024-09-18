@@ -37,11 +37,14 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = async () => ({
 
 const Captions: FC<PlasmoCSUIProps> = () => {
   const [timedtextUrl, setTimedtextUrl] = useState<string>("");
+
   useMessage<{ url: string }, string>(async (req, _) => {
     if (req.name === "timedtextUrl") {
       setTimedtextUrl(req.body.url);
     }
   });
+
+  // update when change video
   const { dualCaptions, loading } = useDualCaptions(timedtextUrl, "vi");
 
   const [activeSubtitle, setCurrentSubtitle] = useState<DualCaption | null>(
@@ -60,7 +63,13 @@ const Captions: FC<PlasmoCSUIProps> = () => {
     return () => clearInterval(intervalId);
   }, [dualCaptions]);
 
-  if (loading) return null;
+  const currentVideoId = new URLSearchParams(window.location.search).get("v");
+  const timedtextVideoId = timedtextUrl
+    ? new URL(timedtextUrl).searchParams.get("v")
+    : "";
+
+  console.log({ currentVideoId, timedtextVideoId, timedtextUrl });
+  if (loading || currentVideoId !== timedtextVideoId) return null;
 
   const videoHeight = document.querySelector("video")?.clientHeight ?? 0;
 
