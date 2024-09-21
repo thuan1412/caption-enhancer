@@ -16,7 +16,6 @@ export const useDualCaptions = (url: string, secondLang?: string) => {
     { enable: isShowSecondCaptions },
   );
 
-  console.log("isShowSecondCaptions", isShowSecondCaptions);
   let dualCaptions: DualCaption[] = [];
 
   if (defaultCaptions !== null) {
