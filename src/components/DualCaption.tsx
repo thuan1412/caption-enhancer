@@ -1,10 +1,8 @@
 import { useRef } from "react";
 
 import { useWordModalStore } from "~store/wordModalStore";
-import type { DualCaption, WordMeaning } from "~types";
+import type { DualCaption } from "~types";
 import { setVideoTime } from "~utils/video";
-
-import WordMeaningComponent from "./WordMeaningModal";
 
 type DualCaptionProps = {
   dualCaption: DualCaption;
