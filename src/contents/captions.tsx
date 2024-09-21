@@ -2,11 +2,12 @@ import cssText from "data-text:~style.css";
 import type {
   PlasmoCSConfig,
   PlasmoCSUIProps,
-  PlasmoGetInlineAnchor
+  PlasmoGetInlineAnchor,
 } from "plasmo";
 import { useEffect, useState, type FC } from "react";
 
 import { useMessage } from "@plasmohq/messaging/hook";
+import { useStorage } from "@plasmohq/storage/hook";
 
 import DualCaptionComponent from "~components/DualCaption";
 import { useDualCaptions } from "~hooks/useDualCaptions";
@@ -15,11 +16,11 @@ import {
   findSubtitleOfTime,
   getCurrentTimeInMs,
   isVideoPlaying,
-  scrollToSubtitle
+  scrollToSubtitle,
 } from "~utils/video";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://www.youtube.com/*"]
+  matches: ["https://www.youtube.com/*"],
 };
 
 export const getStyle = () => {
@@ -30,9 +31,9 @@ export const getStyle = () => {
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = async () => ({
   element: document.querySelector(
-    "div#columns div#secondary div#secondary-inner"
+    "div#columns div#secondary div#secondary-inner",
   ),
-  insertPosition: "beforebegin"
+  insertPosition: "beforebegin",
 });
 
 const Captions: FC<PlasmoCSUIProps> = () => {
@@ -44,12 +45,12 @@ const Captions: FC<PlasmoCSUIProps> = () => {
     }
   });
 
-  // update when change video
   const { dualCaptions, loading } = useDualCaptions(timedtextUrl, "vi");
 
   const [activeSubtitle, setCurrentSubtitle] = useState<DualCaption | null>(
-    null
+    null,
   );
+  const [isExtEnable] = useStorage("isExtEnable");
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -59,7 +60,7 @@ const Captions: FC<PlasmoCSUIProps> = () => {
       if (currentSub && isVideoPlaying()) {
         scrollToSubtitle(currentSub.timestamp);
       }
-    }, 1000);
+    }, 500);
     return () => clearInterval(intervalId);
   }, [dualCaptions]);
 
@@ -68,14 +69,15 @@ const Captions: FC<PlasmoCSUIProps> = () => {
     ? new URL(timedtextUrl).searchParams.get("v")
     : "";
 
-  console.log({ currentVideoId, timedtextVideoId, timedtextUrl });
   if (loading || currentVideoId !== timedtextVideoId) return null;
 
   const videoHeight = document.querySelector("video")?.clientHeight ?? 0;
 
+  if (!isExtEnable) return null;
+
   return (
     <div
-      className="border-gray-100 border-2 border-solid p-2 rounded-lg text-2xl "
+      className="border-gray-100 border-2 border-solid p-2 rounded-2xl text-2xl "
       style={{ maxHeight: videoHeight }}>
       <div
         id="dual-caption-container"

@@ -17,8 +17,10 @@ const DualCaptionComponent = ({ dualCaption, isActive }: DualCaptionProps) => {
           {timestamp}
         </button>
         <div className="flex flex-col">
-          <p className={isActive ? "font-bold" : ""}>{firstLanguage}</p>
-          <p className={"italic " + (isActive ? "font-medium" : "")}>
+          <p className={isActive ? "font-bold" : "font-extralight"}>
+            {firstLanguage}
+          </p>
+          <p className={"italic " + (isActive ? "font-medium" : "font-thin")}>
             {secondLanguage}
           </p>
         </div>

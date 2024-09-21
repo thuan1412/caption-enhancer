@@ -9,7 +9,7 @@ export const getCaptions = async (urlStr: string) => {
 
 export const findSubtitleOfTime = (
   timeInMs: number,
-  subtitles: DualCaption[]
+  subtitles: DualCaption[],
 ) => {
   const optimal = false;
   if (optimal) {
@@ -62,11 +62,12 @@ function msToTime(ms: number) {
 
 export const mergeCaptions = (
   firstEvents: Event[],
-  secondEvents: Event[]
+  secondEvents: Event[],
 ): DualCaption[] => {
   if (firstEvents.length === 0) {
     return [];
   }
+
   const timestampToSecondSeg: Record<number, string> = {};
   secondEvents.forEach(
     (event: { segs?: { utf8: string }[]; tStartMs: number }) => {
@@ -77,8 +78,9 @@ export const mergeCaptions = (
         .flatMap((segment: { utf8: string }) => segment.utf8)
         .join("");
       timestampToSecondSeg[event.tStartMs] = text;
-    }
+    },
   );
+
   const data = firstEvents.map(
     (event: { tStartMs: number; segs?: { utf8: string }[] }) => {
       if (!event.segs) {
@@ -88,13 +90,13 @@ export const mergeCaptions = (
         timeInMs: event.tStartMs,
         timestamp: msToTime(event.tStartMs),
         firstLanguage: event.segs.flatMap((segment) => segment.utf8).join(""),
-        secondLanguage: timestampToSecondSeg[event.tStartMs]
+        secondLanguage: timestampToSecondSeg[event.tStartMs],
       };
-    }
+    },
   );
 
   return data.filter(
-    (ele: DualCaption | undefined) => !(!ele || ele.firstLanguage === "\n")
+    (ele: DualCaption | undefined) => !(!ele || ele.firstLanguage === "\n"),
   );
 };
 
@@ -129,10 +131,10 @@ export const getCurrentTimeInMs = () => {
 export const scrollToSubtitle = (currentTime: string) => {
   const rootElement = document.querySelector("#secondary > plasmo-csui");
   const subtitleElement = rootElement?.shadowRoot?.getElementById(
-    `dual-caption-${currentTime}`
+    `dual-caption-${currentTime}`,
   );
   const scrollableDiv = rootElement?.shadowRoot?.getElementById(
-    "dual-caption-container"
+    "dual-caption-container",
   );
 
   if (subtitleElement && scrollableDiv) {
@@ -145,7 +147,7 @@ export const scrollToSubtitle = (currentTime: string) => {
 
     scrollableDiv.scrollTo({
       top: newScrollTop,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   }
 };

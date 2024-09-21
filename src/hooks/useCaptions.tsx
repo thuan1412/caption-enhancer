@@ -10,7 +10,11 @@ export const getCaptions = async (urlStr: string) => {
   return captionsRes;
 };
 
-export const useCaptions = (url: string, tlang?: string) => {
+export const useCaptions = (
+  url: string,
+  tlang?: string,
+  options: { enable: boolean } = { enable: true },
+) => {
   const [captions, setCaptions] = useState<TimedTextResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -20,7 +24,7 @@ export const useCaptions = (url: string, tlang?: string) => {
     }
     const timedtextUrl = getTimedTextURL(url, {
       language: tlang,
-      isGenerated: true
+      isGenerated: true,
     });
     const fetchCaptions = async () => {
       setLoading(true);
@@ -35,8 +39,13 @@ export const useCaptions = (url: string, tlang?: string) => {
       }
     };
 
-    fetchCaptions();
-  }, [url]);
+    if (options?.enable) {
+      fetchCaptions();
+    }
+  }, [url, options.enable, tlang]);
 
+  if (options?.enable === false) {
+    return { captions: null, loading: false };
+  }
   return { captions, loading };
 };
