@@ -14,12 +14,12 @@ chrome.webRequest.onBeforeRequest.addListener(
           name: "timedtextUrl",
           tabId: details.tabId,
           body: {
-            url: details.url
-          }
+            url: details.url,
+          },
         });
         // wait for the content script to be ready
       }, 2000);
     }
   },
-  { urls: ["<all_urls>"] }
+  { urls: ["<all_urls>"] },
 );

@@ -8,7 +8,7 @@ type TimedTextOptions = {
  */
 export const getTimedTextURL = (
   urlStr: string,
-  options: TimedTextOptions
+  options: TimedTextOptions,
 ): string => {
   const url = new URL(urlStr);
 
