@@ -46,9 +46,9 @@ export interface Seg {
   tOffsetMs?: number;
 }
 
-export type WordMeaningResponse = WordMeaning[];
+export type WordDefinitionResponse = WordDefinition[];
 
-export interface WordMeaning {
+export interface WordDefinition {
   word: string;
   phonetics: Phonetic[];
   meanings: Meaning[];

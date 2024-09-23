@@ -1,16 +1,14 @@
-import { isError } from "util";
 import axios from "axios";
 import React, { useEffect, useRef } from "react";
 
-import { useWordDefinition } from "~hooks/useGetWordDict";
+import { useWordDefinition } from "~hooks/useGetWordDefinition";
 import { useWordModalStore } from "~store/wordModalStore";
-import type { WordDefinition } from "~types";
 
 interface Props {
   word: string;
 }
 
-const WordDefinitionComponent = () => {
+const WordDefinitionModal = () => {
   const word = useWordModalStore((state) => state.word);
   const { isLoading, isError, data } = useWordDefinition(word);
   const isShowModal = useWordModalStore((state) => state.isShow);
@@ -37,21 +35,51 @@ const WordDefinitionComponent = () => {
   }, []);
 
   if (!isShowModal) return null;
-  if (isLoading || isError || !wordDefinition) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div
+        className="absolute overflow-scroll p-2 bg-base-200 rounded-lg shadow-md flex justify-center items-center"
+        ref={ref}
+        style={{
+          top: modalPos.top + "px",
+          left: modalPos.left + "px",
+          height: 150,
+          width: 300,
+        }}
+      >
+        <span className="loading loading-spinner loading-lg" />
+      </div>
+    );
+  }
+  if (isError || !wordDefinition) {
+    return (
+      <div
+        className="absolute overflow-scroll p-2 bg-base-200 rounded-lg shadow-md flex justify-center items-center"
+        ref={ref}
+        style={{
+          top: modalPos.top + "px",
+          left: modalPos.left + "px",
+          height: 150,
+          width: 300,
+        }}
+      >
+        <span>Not found</span>
+      </div>
+    );
+  }
+
   return (
     <div
-      className="absolute overflow-scroll p-2 bg-base-200 rounded-lg shadow-md"
-      ref={ref}
+      className="p-2 overflow-y-scroll border-gray-600 border-2 border-solid absolute bg-base-200 rounded-lg shadow-md"
       style={{
         top: modalPos.top + "px",
         left: modalPos.left + "px",
         height: 150,
         width: 300,
-      }}>
-      <h2 className="text-2xl font-bold mb-4 text-primary">
-        {/* {wordMeaning.word} */}
-        {word}
-      </h2>
+      }}
+      ref={ref}
+    >
+      <h2 className="text-2xl font-bold mb-4 text-primary">{word}</h2>
 
       {/* Phonetics */}
       {/* {wordMeaning.phonetics.map((phonetic, index) => ( */}
@@ -92,21 +120,31 @@ const WordDefinitionComponent = () => {
       ))}
 
       {/* Source URLs */}
-      {/* <div className="mt-4"> */}
-      {/*   <h4 className="font-semibold">Source:</h4> */}
-      {/*   {wordMeaning.sourceUrls.map((url, index) => ( */}
-      {/*     <a */}
-      {/*       key={index} */}
-      {/*       href={url} */}
-      {/*       className="link link-primary block mt-2" */}
-      {/*       target="_blank" */}
-      {/*       rel="noopener noreferrer"> */}
-      {/*       {url} */}
-      {/*     </a> */}
-      {/*   ))} */}
-      {/* </div> */}
+      <div className="mt-4">
+        <h4 className="font-semibold">Source:</h4>
+        {wordDefinition.sourceUrls.map((url, index) => (
+          <a
+            key={index}
+            href={url}
+            className="link link-primary block mt-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {url}
+          </a>
+        ))}
+        <a
+          key={"cambridge"}
+          href={"https://dictionary.cambridge.org/dictionary/english/" + word}
+          className="link link-primary block mt-2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Cambridge Dictionary
+        </a>
+      </div>
     </div>
   );
 };
 
-export default WordDefinitionComponent;
+export default WordDefinitionModal;

@@ -81,7 +81,7 @@ const Captions: FC<PlasmoCSUIProps> = () => {
     const handleResize = () => {
       if (parentRef.current) {
         const boundingBox = parentRef.current.getBoundingClientRect();
-        setContainerPos({ left: boundingBox.left, top: boundingBox.top });
+        setContainerPos(boundingBox);
       }
     };
 
@@ -117,12 +117,14 @@ const Captions: FC<PlasmoCSUIProps> = () => {
       <div
         ref={parentRef}
         className="relative border-gray-100 border-2 border-solid p-2 rounded-2xl text-2xl"
-        style={{ maxHeight: videoHeight }}>
+        style={{ maxHeight: videoHeight }}
+      >
         <WordDefinitionModal />
         <div
           id="dual-caption-container"
           className="overflow-scroll size-full pb-1"
-          style={{ maxHeight: videoHeight - 16 }}>
+          style={{ maxHeight: videoHeight - 16 }}
+        >
           {dualCaptions.map((item, idx) => (
             <DualCaptionComponent
               key={idx}

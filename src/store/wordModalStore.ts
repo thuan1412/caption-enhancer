@@ -7,9 +7,8 @@ interface WordModalStoreState {
   word: string;
   showModal: (offset: { left: number; top: number }, word: string) => void;
   hideModal: () => void;
-  containerPos: { left: number; top: number };
-  setContainerPos: (pos: { left: number; top: number }) => void;
-  setModalPos: (pos: { left: number; top: number }) => void;
+  containerPos: DOMRect;
+  setContainerPos: (pos: DOMRect) => void;
 }
 
 // Create the store
@@ -20,6 +19,6 @@ export const useWordModalStore = create<WordModalStoreState>((set) => ({
   showModal: (offset, word) =>
     set({ isShow: true, modalPos: offset, word: word }),
   hideModal: () => set({ isShow: false }),
-  containerPos: { left: 0, top: 0 },
-  setContainerPos: (pos) => set({ containerPos: pos }),
+  containerPos: DOMRect.fromRect({ x: 0, y: 0, width: 0, height: 0 }),
+  setContainerPos: (domRect) => set({ containerPos: domRect }),
 }));
