@@ -14,8 +14,9 @@ window.addEventListener("load", () => {
     );
     if (ccBtn) {
       if (
-        ccBtn.getAttribute("aria-pressed") === "false" &&
-        (prevVideoId !== currentVideoId || prevVideoId === "")
+        // ccBtn.getAttribute("aria-pressed") === "false" &&
+        prevVideoId !== currentVideoId ||
+        prevVideoId === ""
       ) {
         (ccBtn as HTMLElement).click();
         setTimeout(() => {
