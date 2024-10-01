@@ -86,3 +86,8 @@ export interface License2 {
   name: string;
   url: string;
 }
+
+export interface CountrySelectType {
+  name: string;
+  code: string;
+}

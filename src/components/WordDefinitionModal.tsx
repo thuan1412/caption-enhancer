@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useRef } from "react";
 
 import { useWordDefinition } from "~hooks/useGetWordDefinition";

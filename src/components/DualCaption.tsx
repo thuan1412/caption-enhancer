@@ -86,7 +86,11 @@ const DualCaptionComponent = ({ dualCaption, isActive }: DualCaptionProps) => {
             ))}
             {/* {firstLanguage} */}
           </p>
-          <p className={"italic " + (isActive ? "font-medium" : "font-thin")}>
+          <p
+            className={
+              "text-yellow-600 " + (isActive ? "font-bold" : "font-extralight")
+            }
+          >
             {secondLanguage}
           </p>
         </div>

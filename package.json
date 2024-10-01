@@ -33,7 +33,7 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://www.youtube.com/*"
     ],
     "permissions": [
       "webRequest",

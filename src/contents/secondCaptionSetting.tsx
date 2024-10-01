@@ -7,32 +7,33 @@ export const config: PlasmoCSConfig = {
   matches: ["https://www.youtube.com/watch*"],
 };
 
+export const getRootContainer = () => null;
 // not used for now
-const getRootContainer = () =>
-  new Promise((resolve) => {
-    const checkInterval = setInterval(() => {
-      const rootContainerParent = document.querySelector(
-        "#ytp-id-18 > div > div",
-      );
-      const afterSibling = document.querySelector(
-        "#ytp-id-18 > div > div > div:nth-child(4)",
-      );
-      const rootContainer = rootContainerParent?.querySelector(
-        "#second-caption-setting",
-      );
-      if (rootContainerParent && !rootContainer) {
-        clearInterval(checkInterval);
-        const rootContainer = document.createElement("div");
-        rootContainer.id = "second-caption-setting";
-        rootContainer.className = "ytp-menuitem";
-        rootContainer.role = "menuitem";
-        rootContainer.setAttribute("aria-haspopup", "true");
-        rootContainer.tabIndex = 0;
-        rootContainerParent.insertBefore(rootContainer, afterSibling);
-        resolve(rootContainer);
-      }
-    }, 137);
-  });
+// const getRootContainer = () =>
+//   new Promise((resolve) => {
+//     const checkInterval = setInterval(() => {
+//       const rootContainerParent = document.querySelector(
+//         "#ytp-id-18 > div > div",
+//       );
+//       const afterSibling = document.querySelector(
+//         "#ytp-id-18 > div > div > div:nth-child(4)",
+//       );
+//       const rootContainer = rootContainerParent?.querySelector(
+//         "#second-caption-setting",
+//       );
+//       if (rootContainerParent && !rootContainer) {
+//         clearInterval(checkInterval);
+//         const rootContainer = document.createElement("div");
+//         rootContainer.id = "second-caption-setting";
+//         rootContainer.className = "ytp-menuitem";
+//         rootContainer.role = "menuitem";
+//         rootContainer.setAttribute("aria-haspopup", "true");
+//         rootContainer.tabIndex = 0;
+//         rootContainerParent.insertBefore(rootContainer, afterSibling);
+//         resolve(rootContainer);
+//       }
+//     }, 137);
+//   });
 
 const SecondCaptionSetting: FC<PlasmoCSUIProps> = () => {
   return (

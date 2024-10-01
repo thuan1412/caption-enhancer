@@ -49,8 +49,12 @@ const Captions: FC<PlasmoCSUIProps> = () => {
       setTimedtextUrl(req.body.url);
     }
   });
+  const [secondLanguage] = useStorage("secondLanguage");
 
-  const { dualCaptions, loading } = useDualCaptions(timedtextUrl, "vi");
+  const { dualCaptions, loading } = useDualCaptions(
+    timedtextUrl,
+    secondLanguage,
+  );
 
   const [activeSubtitle, setCurrentSubtitle] = useState<DualCaption | null>(
     null,

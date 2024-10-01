@@ -2,6 +2,8 @@ import "~style.css";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
+import CountryPicker from "~components/CountryPicker";
+
 function IndexPopup() {
   const [isExtEnable, setIsExtEnable, { setRenderValue, setStoreValue }] =
     useStorage("isExtEnable");
@@ -23,7 +25,7 @@ function IndexPopup() {
         </h3>
       </div>
       <div className="flex flex-col">
-        <div className="form-control w-60">
+        <div className="form-control w-100">
           <label className="label cursor-pointer">
             <span className="label-text">Show dual-captions panel</span>
             <input
@@ -50,6 +52,7 @@ function IndexPopup() {
               }}
             />
           </label>
+          <CountryPicker />
         </div>
       </div>
     </div>
